@@ -60,15 +60,15 @@ human-in-the-loop interrupt/resume via checkpointing.
                                            +-> :hold               (:hard? true)
 ```
 
-- `src/data_entry/store.cljc` — `Store` protocol + `MemStore`:
+- `src/data_entry/store.kotoba` — `Store` protocol + `MemStore`:
   registered datasets, committed records, an append-only audit ledger.
-- `src/data_entry/advisor.cljc` — `Advisor` protocol; `mock-advisor`
+- `src/data_entry/advisor.kotoba` — `Advisor` protocol; `mock-advisor`
   (deterministic, default) proposes an entry operation from a
   request; `llm-advisor` wraps a `langchain.model/ChatModel` — either
   way the advisor only ever produces a `:propose`-effect proposal,
   never a committed record, and LLM parse failures always yield
   `confidence 0.0` (forces escalation, never fabricated confidence).
-- `src/data_entry/governor.cljc` — `DataEntryGovernor/check`: a pure
+- `src/data_entry/governor.kotoba` — `DataEntryGovernor/check`: a pure
   function, wired as its own `:govern` node. Hard invariants
   (unregistered dataset, a proposal whose `:effect` isn't `:propose`)
   always route to `:hold`. Escalation invariants
@@ -79,7 +79,7 @@ human-in-the-loop interrupt/resume via checkpointing.
   robotics-premise statement that entering data into a regulated
   financial or medical record system and overriding a validation
   failure always require human sign-off.
-- `src/data_entry/actor.cljc` — `build-graph`, `run-request!`,
+- `src/data_entry/actor.kotoba` — `build-graph`, `run-request!`,
   `approve!`: the `langgraph.graph/state-graph` wiring itself.
 
 ```bash
