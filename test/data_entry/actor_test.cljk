@@ -1,5 +1,5 @@
 (ns data-entry.actor-test
-  (:require [clojure.test :refer [deftest is testing]]
+  (:require [kotoba.test :refer [deftest is testing]]
             [data-entry.actor :as actor]
             [data-entry.store :as store]))
 
